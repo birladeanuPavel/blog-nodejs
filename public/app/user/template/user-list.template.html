@@ -1,0 +1,24 @@
+<div>
+    <table class="table table-bordered">
+        <tr class="info">
+            <td>Name</td>
+            <td>Surname</td>
+            <td>Email</td>
+            <td>Edit</td>
+            <td>Delete</td>
+        </tr>
+        <tr ng-repeat="user in $ctrl.users">
+            <td>{{user.name}}</td>
+            <td>{{user.surname}}</td>
+            <td>{{user.email}}</td>
+            <td>
+                <a href="#!/userDetail/{{user._id}}">
+                    <span class="glyphicon glyphicon-pencil"></span>
+                </a>
+            </td>
+            <td>
+                <span class="glyphicon glyphicon-remove" style="cursor: pointer" ng-click="$ctrl.delete(user._id)"></span>
+            </td>
+        </tr>
+    </table>
+</div>
