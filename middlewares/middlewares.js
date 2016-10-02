@@ -8,7 +8,7 @@
     module.exports = {
         isAuthenticated: (req, res, next) => {
             let token = req.query.token || req.body.token || req.headers['x-access-token'];
-            console.log(token);
+
             if (token) {
                 // verifies secret and checks exp
                 jwt.verify(token, config.secretKey, function(err, decoded) {
@@ -52,7 +52,6 @@
             let userId = req.params.userId,
                 token = req.query.token || req.body.token || req.headers['x-access-token'];
 
-            console.log(token);
             jwt.verify(token, config.secretKey, function(err, decoded) {
                 if ((userId === decoded._doc._id) || (decoded._doc.rights.indexOf('ADMIN') !== -1)) {
                     next();
