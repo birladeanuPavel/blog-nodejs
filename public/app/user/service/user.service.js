@@ -21,7 +21,7 @@
             },
             update: {
                 method: 'PUT',
-                headers: { 'x-access-token': sessionStorage.getItem("token") },
+                headers: { 'x-access-token': localStorage.getItem("token") },
                 interceptor: {
                     responseE: modifyHandler,
                     responseError: genericErrorHandler
@@ -29,11 +29,11 @@
             },
             delete: {
                 method: 'DELETE',
-                headers: { 'x-access-token': sessionStorage.getItem("token") }
+                headers: { 'x-access-token': localStorage.getItem("token") }
             },
             get: {
                 method: "GET",
-                headers: { 'x-access-token': sessionStorage.getItem("token") },
+                headers: { 'x-access-token': localStorage.getItem("token") },
                 interceptor: {
                     responseError: genericErrorHandler
                 }
@@ -50,13 +50,12 @@
 
         function modifyHandler(response) {
             if (response.status === STATUS_OK) {
-                sessionStorage.setItem('token', response.data.token);
+                localStorage.setItem('token', response.data.token);
                 $location.path('/users');
             }
         }
 
         function genericErrorHandler(error) {
-            console.log(error)
             if (error.status === ERROR_STATUS_FORBIDDEN) {
                 $location.path('/login');
             }

@@ -13,9 +13,13 @@
         vm.user = {};
         if ($routeParams.userId){
             console.log(sessionStorage.getItem("token"))
-            User.get({userId: $routeParams.userId}, function(result) {
-                vm.UserProxy = result;
-                vm.user = result.user;
+            User.get({userId: $routeParams.userId}, function(response) {
+                if (response.success) {
+                    vm.UserProxy = response;
+                    vm.user = response.user;
+                } else {
+                    $location.path("/login");
+                }
             });
         }
         vm.save = function (form) {
