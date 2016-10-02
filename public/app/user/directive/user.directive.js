@@ -1,15 +1,18 @@
 /**
  * Created by pavel on 9/19/16.
  */
-angular.module('userModule').directive('validPassword', function () {
-    return {
-        require: 'ngModel',
-        link: function (scope, elm, attrs, ctrl) {
-            ctrl.$parsers.unshift(function (viewValue, $scope) {
-                var noMatch = viewValue != scope.$ctrl.user.password;
-                ctrl.$setValidity('noMatch', !noMatch);
-                return !noMatch;
-            })
+(() => {
+    angular.module('userModule').directive('validPassword', function () {
+        return {
+            require: 'ngModel',
+            link: function (scope, elm, attrs, ctrl) {
+                var vm = scope;
+                ctrl.$parsers.unshift(function (viewValue) {
+                    var noMatch = viewValue != vm.$ctrl.user.password;
+                    ctrl.$setValidity('noMatch', !noMatch);
+                    return !noMatch;
+                })
+            }
         }
-    }
+    });    
 });
