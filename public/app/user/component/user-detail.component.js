@@ -1,7 +1,7 @@
 /**
  * Created by pavel on 9/17/16.
  */
-userModule.component('userDetail', {
+angular.module('userModule').component('userDetail', {
     templateUrl: 'app/user/template/user-detail.template.html',
     controller:['$routeParams', '$location', 'User', function UserDetaiController ($routeParams, $location, User) {
         var _this = this;

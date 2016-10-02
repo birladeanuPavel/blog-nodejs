@@ -1,7 +1,7 @@
 /**
  * Created by pavel on 9/17/16.
  */
-userModule.component('userList', {
+angular.module('userModule').component('userList', {
     templateUrl: 'app/user/template/user-list.template.html',
     controller:['User', function UserListController(User) {
         var _this = this;
