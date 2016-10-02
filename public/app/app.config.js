@@ -1,4 +1,5 @@
 (() => {
+    'use strict';
     angular.module("blogModule").config(['$locationProvider', '$routeProvider',
         function config($locationProvider, $routeProvider) {
             $locationProvider.hashPrefix('!');

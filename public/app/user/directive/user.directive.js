@@ -2,6 +2,7 @@
  * Created by pavel on 9/19/16.
  */
 (() => {
+    'use strict';
     angular.module('userModule').directive('validPassword', function () {
         return {
             require: 'ngModel',
