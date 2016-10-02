@@ -15,10 +15,12 @@
         });
 
         vm.delete = function (id) {
-            User.delete({userId: id}, function (success) {
-                vm.users = vm.users.filter(function (user) {
-                    return user._id != id;
-                })
+            User.delete({userId: id}, function onSuccess (response) {
+                if(response.success){
+                    vm.users = vm.users.filter(function (user) {
+                        return user._id != id;
+                    });
+                }
             });
         };
     }

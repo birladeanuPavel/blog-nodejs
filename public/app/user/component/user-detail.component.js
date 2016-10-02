@@ -12,6 +12,7 @@
         var vm = this;
         vm.user = {};
         if ($routeParams.userId){
+            console.log(sessionStorage.getItem("token"))
             User.get({userId: $routeParams.userId}, function(result) {
                 vm.UserProxy = result;
                 vm.user = result.user;
@@ -20,7 +21,7 @@
         vm.save = function (form) {
             if(form.$valid) {
                 if(vm.user._id) {
-                    User.update({}, vm.user, function () {
+                    User.update({userId: vm.user._id}, vm.user, function () {
                         $location.path('/users')
                     }, function (error) {
                         console.log(error);

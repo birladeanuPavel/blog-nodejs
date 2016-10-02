@@ -31,26 +31,26 @@
         });
     });
 
-    router.put('/', (req, res) => {
-        let user = new User(req.body);
-        User.update({_id:req.body._id}, user, function (err) {
-            if (err) {
-                if (err.hasOwnProperty('code') && err.code === utils.mongo.UNIQUE_KEY_VIOLATION) {
-                    res.json({
-                        success: false,
-                        message: utils.messages.USER_DUPLICATE
-                    });
-                } else {
-                    res.json({
-                        success: false,
-                        message: utils.listifyErrors(err)
-                    });
-                }
-            } else {
-                generateTokenForUser(user, res, utils.messages.USER_CREATED_SUCCESS);
-            }
-        });
-    });
+    // router.put('/', (req, res) => {
+    //     let user = new User(req.body);
+    //     User.update({_id:req.body._id}, user, function (err) {
+    //         if (err) {
+    //             if (err.hasOwnProperty('code') && err.code === utils.mongo.UNIQUE_KEY_VIOLATION) {
+    //                 res.json({
+    //                     success: false,
+    //                     message: utils.messages.USER_DUPLICATE
+    //                 });
+    //             } else {
+    //                 res.json({
+    //                     success: false,
+    //                     message: utils.listifyErrors(err)
+    //                 });
+    //             }
+    //         } else {
+    //             generateTokenForUser(user, res, utils.messages.USER_CREATED_SUCCESS);
+    //         }
+    //     });
+    // });
     
     router.get('/', (req, res) => {
         User.find({
@@ -60,7 +60,6 @@
         }).then(handleSuccess, handleErrors);
 
         function handleSuccess(users) {
-            console.log(users)
             if (users) {
                 return res.json({
                     success: true,
@@ -150,6 +149,7 @@
 
             function handleSuccess(user) {
                 if (user) {
+                    user.password = undefined;
                     return res.json({
                         success: true,
                         user: user

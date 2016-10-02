@@ -10,7 +10,9 @@
                 template: '<user-detail></user-detail>'
             }).when('/userDetail', {
                 template: '<user-detail></user-detail>'
-            }).otherwise('/');
+            }).when('/login', {
+                template: '<user-login></user-login>'  
+            }).otherwise('/login');
         }
     ]);
 })();
