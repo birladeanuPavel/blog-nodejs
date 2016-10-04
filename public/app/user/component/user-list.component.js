@@ -10,12 +10,13 @@
 
     function UserListController(User, $location) {
         var vm = this;
-        User.get({}, function (usersPromise) {
+        const token = localStorage.getItem("token");
+        User(token).get({}, function (usersPromise) {
             vm.users = usersPromise.users;
         });
 
         vm.delete = function (id) {
-            User.delete({userId: id}, function onSuccess (response) {
+            User(token).delete({userId: id}, function onSuccess (response) {
                 if(response.success){
                     vm.users = vm.users.filter(function (user) {
                         return user._id != id;

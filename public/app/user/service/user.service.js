@@ -11,53 +11,55 @@
         .factory('User', ['$resource', '$location', User]);
 
     function User($resource, $location) {
-        return $resource(USER_RESOURCE + '/:userId', {}, {
-            save: {
-                method: 'POST',
-                interceptor: {
-                    response: modifyHandler,
-                    responseError: genericErrorHandler
+        return (token) => {
+            return $resource(USER_RESOURCE + '/:userId', {}, {
+                save: {
+                    method: 'POST',
+                    interceptor: {
+                        response: modifyHandler,
+                        responseError: genericErrorHandler
+                    }
+                },
+                update: {
+                    method: 'PUT',
+                    headers: {'x-access-token': token},
+                    interceptor: {
+                        responseE: modifyHandler,
+                        responseError: genericErrorHandler
+                    }
+                },
+                delete: {
+                    method: 'DELETE',
+                    headers: {'x-access-token': token}
+                },
+                get: {
+                    method: "GET",
+                    headers: {'x-access-token': token},
+                    interceptor: {
+                        responseError: genericErrorHandler
+                    }
+                },
+                login: {
+                    method: 'POST',
+                    url: USER_RESOURCE + "/login",
+                    interceptor: {
+                        response: modifyHandler,
+                        responseError: genericErrorHandler
+                    }
                 }
-            },
-            update: {
-                method: 'PUT',
-                headers: { 'x-access-token': localStorage.getItem("token") },
-                interceptor: {
-                    responseE: modifyHandler,
-                    responseError: genericErrorHandler
-                }
-            },
-            delete: {
-                method: 'DELETE',
-                headers: { 'x-access-token': localStorage.getItem("token") }
-            },
-            get: {
-                method: "GET",
-                headers: { 'x-access-token': localStorage.getItem("token") },
-                interceptor: {
-                    responseError: genericErrorHandler
-                }
-            },
-            login: {
-                method: 'POST',
-                url: USER_RESOURCE + "/login",
-                interceptor: {
-                    response: modifyHandler,
-                    responseError: genericErrorHandler
+            });
+            
+            function modifyHandler(response) {
+                if (response.status === STATUS_OK) {
+                    localStorage.setItem('token', response.data.token);
+                    $location.path('/users');
                 }
             }
-        });
 
-        function modifyHandler(response) {
-            if (response.status === STATUS_OK) {
-                localStorage.setItem('token', response.data.token);
-                $location.path('/users');
-            }
-        }
-
-        function genericErrorHandler(error) {
-            if (error.status === ERROR_STATUS_FORBIDDEN) {
-                $location.path('/login');
+            function genericErrorHandler(error) {
+                if (error.status === ERROR_STATUS_FORBIDDEN) {
+                    $location.path('/login');
+                }
             }
         }
     }

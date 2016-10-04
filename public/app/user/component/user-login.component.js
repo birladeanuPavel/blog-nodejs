@@ -13,7 +13,7 @@
         vm.user = {};
         vm.login = function (form) {
             if(form.$valid) {
-                User.login({}, vm.user);
+                User(localStorage.getItem("token")).login({}, vm.user);
             }
         };
     }
