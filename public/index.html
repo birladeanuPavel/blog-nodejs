@@ -6,7 +6,7 @@
     <link rel="stylesheet" href="stylesheet/bootstrap/css/bootstrap.min.css"/>
     <link rel="stylesheet" href="stylesheet/main.css"/>
 </head>
-<body ngCloack>
+<body ngCloack ng-controller="MainController as mainController">
     <nav class="navbar navbar-default navbar-fixed-top">
         <div class="container">
             <div class="navbar-header">
@@ -17,7 +17,8 @@
                     <li><a href="#!/userDetail">Create User</a></li>
                 </ul>
                 <ul class="nav navbar-nav navbar-right">
-                    <li><a href="#!/login">Login</a></li>
+                    <li ng-show="!logged"><a href="#!/login">Login</a></li>
+                    <li ng-show="logged"><a ng-click="mainController.logout()">Logout</a></li>
                 </ul>
             </div>
         </div>
@@ -40,5 +41,6 @@
     <script src="app/user/component/user-list.component.js"></script>
     <script src="app/user/component/user-login.component.js"></script>
     <script src="app/user/directive/user.directive.js"></script>
+    <script src="app/user/controller/login.comtroller.js"></script>
 </body>
 </html>

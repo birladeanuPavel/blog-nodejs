@@ -5,15 +5,16 @@
     'use strict';
     angular.module('userModule').component('userLogin', {
         templateUrl: 'app/user/template/user-login.template.html',
-        controller:['$routeParams', '$location', 'User', UserLoginController]
+        controller:['$rootScope', 'User', UserLoginController]
     });
 
-    function UserLoginController ($routeParams, $location, User) {
+    function UserLoginController ($rootScope, User) {
         var vm = this;
         vm.user = {};
         vm.login = function (form) {
             if(form.$valid) {
                 User(localStorage.getItem("token")).login({}, vm.user);
+                $rootScope.logged = true;
             }
         };
     }
